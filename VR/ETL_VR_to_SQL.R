@@ -123,3 +123,15 @@ con <- DBI::dbConnect(odbc::odbc(),
 odbc::dbWriteTable(con,  "VisitReview_ETL", data_for_export, row.names = FALSE)
 
 
+# Get the path, turn into an executable script, then execute
+sql_script_path <- "C:/Users/jowilson/Documents/ETL/VR/VisitReview_ETL_SQLScript_CLN.sql"
+
+sql_script <- readLines(sql_script_path, warn = FALSE)
+
+sql_command <- paste(sql_script, collapse = "\n")
+
+#Execute script
+dbSendQuery(con, sql_command)
+
+dbDisconnect(con)
+
